@@ -1,0 +1,8 @@
+.ticket-sorting__label {
+  display: block;
+  font-weight: bold;
+}
+
+.ticket-sorting__input {
+  margin-top: 1em;
+}

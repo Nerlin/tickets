@@ -1,0 +1,16 @@
+.paginator {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.paginator .action {
+  margin: 1em;
+}
+
+.paginator__count {
+  margin: auto;
+}
+
+.paginator__count-value {
+  font-style: italic;
+}

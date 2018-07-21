@@ -1,0 +1,24 @@
+.ticket-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1em;
+}
+
+.ticket-list__add {
+  margin: 1em 0;
+  width: 50px;
+}
+
+.ticket-list__item {
+  border: 1px solid darkgray;
+  margin: 0.5em 0;
+  padding: 1em;
+}
+
+.ticket-list-menu {
+  margin-top: 0.5em;
+}
+
+.ticket-list-menu .action {
+  margin: 0.5em 0.5em 0.5em 0;
+}
