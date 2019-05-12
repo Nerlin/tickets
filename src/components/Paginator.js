@@ -1,48 +1,64 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./Paginator.css";
 import Action from "./Action";
+import "./Paginator.css";
 
 
-const Paginator = ({ page: currentPage, pageSize, count, onPageChange }) => {
-  const lastPage = Math.floor(count / pageSize) + 1;
-  const incorrectCurrentPage = currentPage < 1 || currentPage > lastPage;
+class Paginator extends React.Component {
+  render() {
+    let { page: currentPage, pageSize, count } = this.props;
+    const lastPage = Math.floor(count / pageSize) + 1;
+    const incorrectCurrentPage = currentPage < 1 || currentPage > lastPage;
+    return (
+      <div className={"paginator"}>
+        <Action
+          text={"Previous"}
+          disabled={incorrectCurrentPage || currentPage === 1}
+          onClick={this.changeToPreviousPage}
+        />
 
-  return (
-    <div className={"paginator"}>
-      <Action
-        text={"Previous"}
-        disabled={incorrectCurrentPage || currentPage === 1}
-        onClick={() => onPageChange(currentPage - 1)}
-      />
+        <input
+          key={currentPage}
+          defaultValue={currentPage}
+          type={"number"}
+          min={1}
+          max={lastPage}
+          step={1}
+          onKeyPress={this.handlePageInputKeyPress}
+          onBlur={this.handlePageInputBlur}
+        />
 
-      <input
-        key={currentPage}
-        defaultValue={currentPage}
-        type={"number"}
-        min={1}
-        max={lastPage}
-        step={1}
-        onKeyPress={(e) => {
-          if (e.key === "Enter") {
-            onPageChange(parseInt(e.currentTarget.value, 10))
-          }
-        }}
-        onBlur={(e) => onPageChange(parseInt(e.target.value, 10))}
-      />
-
-      <span className={"paginator__count"}>
+        <span className={"paginator__count"}>
         Found elements: <span className={"paginator__count-value"}>{count}</span>.
       </span>
 
-      <Action
-        text={"Next"}
-        disabled={incorrectCurrentPage || currentPage === lastPage}
-        onClick={() => onPageChange(currentPage + 1)}
-      />
-    </div>
-  );
-};
+        <Action
+          text={"Next"}
+          disabled={incorrectCurrentPage || currentPage === lastPage}
+          onClick={this.changeToNextPage}
+        />
+      </div>
+    );
+  }
+
+  changeToPreviousPage = () => {
+    this.props.onPageChange(this.props.page - 1);
+  }
+
+  changeToNextPage = () => {
+    this.props.onPageChange(this.props.page + 1);
+  }
+
+  handlePageInputKeyPress = (e) => {
+    if (e.key === "Enter") {
+      this.props.onPageChange(parseInt(e.target.value, 10));
+    }
+  }
+
+  handlePageInputBlur = (e) => {
+    this.props.onPageChange(parseInt(e.target.value, 10))
+  }
+}
 
 Paginator.propTypes = {
   page: PropTypes.number,
